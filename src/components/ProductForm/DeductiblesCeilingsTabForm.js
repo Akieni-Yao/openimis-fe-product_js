@@ -101,7 +101,7 @@ const DeductiblesCeilingsTabForm = (props) => {
       <Grid item xs={4} className={classes.item}>
         <FormControlLabel
           label={formatMessage("DeductiblesCeilingsTabForm.splitCeilings")}
-          control={<Checkbox checked={isSplit} onChange={setSplit} disabled={readOnly} />}
+          control={<Checkbox checked={isSplit} onChange={setSplit} disabled={readOnly} color="primary"/>}
         />
       </Grid>
       <Grid item xs={6}>
