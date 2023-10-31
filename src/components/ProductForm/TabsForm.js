@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useRef} from "react";
 import { Tab, Tabs, Paper } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { withTheme, withStyles } from "@material-ui/styles";
 import { useTranslations, combine } from "@openimis/fe-core";
 import ItemsTabForm from "./ItemsTabForm";
@@ -9,6 +10,15 @@ import ServicesTabForm from "./ServicesTabForm";
 import DeductiblesCeilingsTabForm from "./DeductiblesCeilingsTabForm";
 import {useLimitDefaultsQuery} from "../../hooks";
 import {LIMIT_TYPES, PRICE_ORIGINS} from "../../constants";
+
+const useStyles = makeStyles((theme) => ({
+  selectedTab: {
+    backgroundColor: "#FFFFFF",
+    color: "#000000",
+    marginTop:"10px",
+    fontWeight:600
+  },
+}));
 
 const CurrentTab = (props) => {
   const { tab } = props;
@@ -30,6 +40,7 @@ const CurrentTab = (props) => {
 
 const TabsForm = (props) => {
   const { classes, ...otherProps } = props;
+  const tabClasses = useStyles(); // Access the CSS classes
   const [activeTab, setActiveTab] = useState("contributions");
   const handleChange = (_, value) => setActiveTab(value);
   const { formatMessage } = useTranslations("product.TabsForm");
@@ -61,12 +72,12 @@ const TabsForm = (props) => {
 
   return isLoadedLimitDefaults && (
     <Paper className={classes.paper}>
-      <Tabs className={classes.header} value={activeTab} indicatorColor="primary" onChange={handleChange}>
-        <Tab value="contributions" label={formatMessage("contributionPlan")}></Tab>
-        <Tab value="items" label={formatMessage("productItems")}></Tab>
-        <Tab value="services" label={formatMessage("productServices")}></Tab>
-        <Tab value="deductibles" label={formatMessage("deductibles")}></Tab>
-        <Tab value="pooling" label={formatMessage("pooling")}></Tab>
+      <Tabs TabIndicatorProps={{style: {borderBottom:'4px solid #FFFFFF'}}} className={classes.header} value={activeTab} indicatorColor="primary" onChange={handleChange}>
+        <Tab value="contributions" label={formatMessage("contributionPlan")} className={activeTab === "contributions" ? tabClasses.selectedTab : ""}></Tab>
+        <Tab value="items" label={formatMessage("productItems")} className={activeTab === "items" ? tabClasses.selectedTab : ""}></Tab>
+        <Tab value="services" label={formatMessage("productServices")} className={activeTab === "services" ? tabClasses.selectedTab : ""}></Tab>
+        <Tab value="deductibles" label={formatMessage("deductibles")} className={activeTab === "deductibles" ? tabClasses.selectedTab : ""}></Tab>
+        <Tab value="pooling" label={formatMessage("pooling")} className={activeTab === "pooling" ? tabClasses.selectedTab : ""}></Tab>
       </Tabs>
       <CurrentTab
         tab={activeTab}

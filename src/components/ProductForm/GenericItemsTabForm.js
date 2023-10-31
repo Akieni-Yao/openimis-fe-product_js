@@ -154,7 +154,7 @@ const ItemsTabForm = (props) => {
       <Grid container className={className}>
         {!readOnly && (
           <Grid item container xs={4} className={classes.item}>
-            <Button startIcon={<AddIcon />} variant="contained" onClick={() => setDialogOpen(true)}>
+            <Button startIcon={<AddIcon />} variant="contained" onClick={() => setDialogOpen(true)} style={{backgroundColor: '#00913E', color: '#FFFFFF'}}>
               {formatMessage("ItemsOrServicesGrid.addItemsButton")}
             </Button>
           </Grid>
