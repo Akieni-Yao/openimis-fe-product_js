@@ -1,5 +1,5 @@
-import React, {useState, useMemo, useRef} from "react";
-import { DataGrid as MuiDataGrid } from "@mui/x-data-grid";
+import React, { useState, useMemo, useRef } from "react";
+import { DataGrid as MuiDataGrid, frFR,enUS } from "@mui/x-data-grid";
 import { ErrorBoundary, useTranslations, useModulesManager } from "@openimis/fe-core";
 import { makeStyles } from "@material-ui/styles";
 import EditIcon from "@material-ui/icons/Edit";
@@ -85,12 +85,21 @@ const CellActions = (props) => {
 };
 
 const DataGrid = (props) => {
-  const { className, onChange, error, isLoading, density, readOnly, rows = [], bindLimitTypesWithDefaultValues } = props;
+  const {
+    className,
+    onChange,
+    error,
+    isLoading,
+    density,
+    readOnly,
+    rows = [],
+    bindLimitTypesWithDefaultValues,
+  } = props;
   const [editRowsModel, setEditRowsModel] = useState({});
   const modulesManager = useModulesManager();
   const { formatMessage } = useTranslations("product.DataGrid", modulesManager);
-  const prevItemsOrServicesRef = useRef()
-
+  const prevItemsOrServicesRef = useRef();
+  let userlang = localStorage.getItem("userLanguage");
   const preventRowEdit = (_, event) => (event.defaultMuiPrevented = true);
   const onRowEditCommit = (id, event) => {
     const idx = _.findIndex(rows, { id });
@@ -126,12 +135,11 @@ const DataGrid = (props) => {
     ];
   }, [props.columns, readOnly]);
 
-
   const handleEditRowsModel = (itemsOrServices) => {
-    bindLimitTypesWithDefaultValues(itemsOrServices, prevItemsOrServicesRef.current)
-    setEditRowsModel(itemsOrServices)
-    prevItemsOrServicesRef.current = itemsOrServices
-  }
+    bindLimitTypesWithDefaultValues(itemsOrServices, prevItemsOrServicesRef.current);
+    setEditRowsModel(itemsOrServices);
+    prevItemsOrServicesRef.current = itemsOrServices;
+  };
 
   return (
     <ErrorBoundary>
@@ -148,6 +156,7 @@ const DataGrid = (props) => {
         onEditRowsModelChange={handleEditRowsModel}
         className={className}
         rows={rows}
+        localeText={userlang === "fr" ? frFR.props.MuiDataGrid.localeText : enUS.props.MuiDataGrid.localeText}
       />
     </ErrorBoundary>
   );

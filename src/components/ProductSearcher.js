@@ -5,7 +5,7 @@ import { Searcher, useTranslations, combine, useModulesManager, ConfirmDialog } 
 import ProductFilters from "./ProductFilters";
 import { Tooltip, IconButton } from "@material-ui/core";
 import { Tab as TabIcon, Delete as DeleteIcon } from "@material-ui/icons";
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import FileCopyIcon from "@material-ui/icons/FileCopy";
 
 const isRowDisabled = (_, row) => Boolean(row.validityTo);
 const formatLocation = (location) => (location ? `${location.code} - ${location.name}` : null);
@@ -24,19 +24,19 @@ const ProductSearcher = (props) => {
   const filtersToQueryParam = useCallback((state) => {
     let params = {};
     if (!state.beforeCursor && !state.afterCursor) {
-      params = {first: state.pageSize};
+      params = { first: state.pageSize };
     }
     if (state.afterCursor) {
       params = {
         after: state.afterCursor,
         first: state.pageSize,
-      }
+      };
     }
     if (state.beforeCursor) {
       params = {
         before: state.beforeCursor,
         last: state.pageSize,
-      }
+      };
     }
     Object.entries(state.filters).forEach(([filterKey, filter]) => {
       params[filterKey] = filter.filter ?? filter.value;
